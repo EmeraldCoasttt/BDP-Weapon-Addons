@@ -7,3 +7,7 @@ Pickup sprite: Squig
 --Sounds--
 Distant Firing sound: Counter-Strike: Source (Valve)
 All other sounds: Counter-Strike: Global Offensive/Counter-Strike 2 (Valve)
+
+--Code--
+Original addon: Dox778
+Rewrite for Brutal Doom Platinum: nemesisVampy
