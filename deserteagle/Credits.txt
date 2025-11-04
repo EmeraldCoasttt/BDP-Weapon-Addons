@@ -1,0 +1,9 @@
+--Sprites--
+Base weapon: TypicalSF
+Muzzle flash: TypicalSF
+Fancier firing frames: Sechtera
+Pickup sprite: Squig
+
+--Sounds--
+Distant Firing sound: Counter-Strike: Source (Valve)
+All other sounds: Counter-Strike: Global Offensive/Counter-Strike 2 (Valve)

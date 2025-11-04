@@ -1,0 +1,38 @@
+ACTOR DeagleCounter : Inventory
+{
+	inventory.maxamount 1
+}
+
+ACTOR DeagleClipSpawn
+{
+	Speed 20
+	PROJECTILE
+	+NOCLIP
+	States
+	{
+	Spawn:
+		TNT1 A 1 NoDelay A_CustomMissile("DeagleClip",1,0,random(85,95),2,1)
+		Stop
+	}
+}
+
+ACTOR DeagleClip : EmptypPistolClip
+{
+	Scale 1.5
+}
+
+ACTOR DeagleCaseSpawn : RifleCaseSpawn
+{
+	States
+	{
+	Spawn:
+		TNT1 A 1 NoDelay A_SpawnProjectile("DeagleCasing", 0, 0, random(-80,-100), 2, random(-40,-60))
+		Stop
+	}
+} 
+
+ACTOR DeagleCasing : PistolCasing
+{
+	Scale 0.22
+	BounceFactor 0.5
+}

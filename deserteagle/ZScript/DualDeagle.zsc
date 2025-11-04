@@ -1,0 +1,359 @@
+class DualDeagleAmmo : Ammo {Default{Inventory.MaxAmount 16; Inventory.Icon "DEAGZ0";}}
+
+class DualDeagle : BrutalWeapon
+{
+	bool sideFired;
+	
+	Default
+	{
+		Weapon.AmmoUse1 0;
+		Weapon.AmmoGive1 0;
+		Weapon.AmmoUse2 0;
+		Weapon.AmmoGive2 0;
+		Weapon.AmmoType1 "Clip1";
+		Weapon.AmmoType2 "DualDeagleAmmo";
+		weapon.selectionorder 3800;
+		Obituary "%o was shot down by %k's Desert Eagle.";
+		Weapon.SisterWeapon "DesertEagle";
+		+WEAPON.NOAUTOAIM
+		+WEAPON.NOAUTOFIRE
+		+WEAPON.NOALERT
+		+WEAPON.NO_AUTO_SWITCH
+		+WEAPON.POWERED_UP
+		Scale 0.9;
+		Tag "Desert Eagle";
+		Inventory.AltHUDIcon "DEAGZ0";
+		BrutalWeapon.DualWeapon "DesertEagle";
+	}
+	States
+	{
+	Ready:
+		DEA3 A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		Loop;
+	Deselect:
+		TNT1 A 0 {
+			let nextWeap = player.PendingWeapon;
+			if (nextWeap.GetClassName() == "DesertEagle") {
+				return resolvestate("DeselectToSingle");
+			}
+			return resolvestate(null);
+		}
+		DEA7 FGHI 1;
+		TNT1 A 0 A_Lower(128);
+		Wait;
+	DeselectToSingle:
+		TNT1 A 0 A_Lower(128);
+		Wait;
+	Select:
+		TNT1 A 0 {A_SetCrosshairDX("SMGRet",1000,0.3);}
+		Goto SelectFirstPersonLegs;
+	SelectContinue:
+		TNT1 A 0 A_jumpifinventory("SwitchingDualModes",1,"SelectFromSingle");
+		TNT1 A 1;
+	ReturnFromNothing:
+		TNT1 A 0 A_PlaySound("DEAGHOLD");
+		DEA7 IHGF 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	SelectFromSingle:
+		TNT1 A 0 A_Takeinventory("SwitchingDualModes",1);
+		TNT1 A 0 A_PlaySound("DEAGHOLD");
+		DEA3 MNOPQRS 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	Fire:
+		TNT1 A 0 A_CheckIfAmmo("DualDeagleAmmo",1);
+		TNT1 A 0 A_JumpIfInventory("PowerStrength",1,1);
+		Goto FireNoBerserk;
+		TNT1 A 0 A_JumpIf(invoker.sideFired == 1,"Fire2");
+		DEA3 B 1 Bright {
+			invoker.sideFired = 1;
+			A_AlertMonstersDX;
+			A_PlaySound("DISTDEAG",6);
+			A_PlaySound("DEAGFIRE",1);
+			A_ZoomFactor(0.98);
+			A_TakeAmmo("DualDeagleAmmo",1);
+			A_FireBullets (1,0.6,-1,81,"ShotgunPuff",FBF_NORANDOM,0,"DecorativeTracer",-6,-10);
+		}
+		DEA3 T 1 Bright A_ZoomFactor(1.0);
+		DEA6 I 1 {
+			A_FireCustomMissile("DeagleCaseSpawn",5,0,-15,3);
+			A_Recoil(0.3);
+			A_SetPitch(pitch-5,SPF_INTERPOLATE);
+			A_SetAngle(angle+2.5,SPF_INTERPOLATE);
+		}
+		DEA6 J 1 A_SetAngle(angle-0.5,SPF_INTERPOLATE);
+		DEA6 K 1 A_SetPitch(pitch+2,SPF_INTERPOLATE);
+		DEA6 L 1 {A_SetAngle(angle-1,SPF_INTERPOLATE); A_SetPitch(pitch+1,SPF_INTERPOLATE);}
+		DEA6 M 1 {A_SetAngle(angle-1,SPF_INTERPOLATE); A_SetPitch(pitch+0.5,SPF_INTERPOLATE);}
+		DEA3 A 1 A_WeaponReady(WRF_NOBOB|WRF_ALLOWRELOAD);
+		Goto Ready;
+	 Fire2:
+		DEA6 N 1 Bright {
+			invoker.sideFired = 0;
+			A_AlertMonstersDX;
+			A_PlaySound("DISTDEAG",6);
+			A_PlaySound("DEAGFIRE",1);
+			A_ZoomFactor(0.98);
+			A_TakeAmmo("DeagleAmmo",1);
+			A_TakeAmmo("DualDeagleAmmo",1);
+			A_FireBullets (1,0.6,-1,81,"ShotgunPuff",FBF_NORANDOM,0,"DecorativeTracer",-6,10);
+		}
+		DEA6 O 1 Bright A_ZoomFactor(1.0);
+		DEA6 P 1 {
+			A_FireCustomMissile("DeagleCaseSpawn",5,0,17,3);
+			A_Recoil(0.3);
+			A_SetPitch(pitch-5,SPF_INTERPOLATE);
+			A_SetAngle(angle-2.5,SPF_INTERPOLATE);
+		}
+		DEA6 Q 1 A_SetAngle(angle+0.5,SPF_INTERPOLATE);
+		DEA6 R 1 A_SetPitch(pitch+2,SPF_INTERPOLATE);
+		DEA6 S 1 {A_SetAngle(angle+1,SPF_INTERPOLATE); A_SetPitch(pitch+1,SPF_INTERPOLATE);}
+		DEA6 T 1 {A_SetAngle(angle+1,SPF_INTERPOLATE); A_SetPitch(pitch+0.5,SPF_INTERPOLATE);}
+		DEA3 A 1 A_WeaponReady(WRF_NOBOB|WRF_ALLOWRELOAD);
+		Goto Ready;
+	FireNoBerserk:
+		TNT1 A 0 A_CheckIfAmmo("DualDeagleAmmo",9);
+		DEA3 B 1 Bright {
+			invoker.sideFired = 1;
+			A_AlertMonstersDX;
+			A_PlaySound("DISTDEAG",6);
+			A_PlaySound("DEAGFIRE",1);
+			A_ZoomFactor(0.98);
+			A_TakeAmmo("DualDeagleAmmo",1);
+			A_FireBullets (2,1.2,-1,81,"ShotgunPuff",FBF_NORANDOM,0,"DecorativeTracer",-6,-10);
+		}
+		DEA3 T 1 Bright A_ZoomFactor(1.0);
+		TNT1 A 0 {A_FireCustomMissile("DeagleCaseSpawn",5,0,0,-8); A_Recoil(0.9);}
+		TNT1 A 0 A_Jump(256,"Lmao1","Lmao2","Lmao3","Lmao4","Lmao5","Lmao6","Lmao7");
+	DeagleExtremeRecoil:
+		DEA3 D 1 A_SetPitch(pitch-5,SPF_INTERPOLATE);
+		DEA3 E 1 {A_SetAngle(angle+3,SPF_INTERPOLATE); A_SetPitch(pitch-5,SPF_INTERPOLATE);}
+		DEA3 F 1 {
+			A_SpawnItemEx("DeagleFlySpawn",random(4,-3),random(-16,-13),30,2,0,2,angle,SXF_ABSOLUTEangle);
+			A_SetAngle(angle+2,SPF_INTERPOLATE);
+			A_SetPitch(pitch-5,SPF_INTERPOLATE);
+		}
+		DEA3 F 1 {A_SetAngle(angle+2,SPF_INTERPOLATE); A_SetPitch(pitch-3,SPF_INTERPOLATE);}
+		DEA3 G 1 {A_SetAngle(angle+1,SPF_INTERPOLATE); A_SetPitch(pitch-3,SPF_INTERPOLATE);}
+		DEA3 G 1 A_SetPitch(pitch-1,SPF_INTERPOLATE);
+		DEA3 G 1 A_SetPitch(pitch-1,SPF_INTERPOLATE);
+		DEA3 G 8;
+		TNT1 A 0
+		{
+			A_SelectWeapon("DesertEagle");
+			DesertEagle deagle = DesertEagle(player.PendingWeapon);
+			deagle.dualWield = 0;
+			deagle.armBroke = 1;
+			return resolvestate("InstaDeselect");
+		}
+		Goto Ready;
+	Lmao1:
+		TNT1 A 0 A_Jump(32,"LmaoSuperSecret");
+		TNT1 A 0 A_Print("Aww,gonna cry?",1);
+		Goto DeagleExtremeRecoil;
+	Lmao2:
+		TNT1 A 0 A_Print("Next time eat a salad.",1);
+		Goto DeagleExtremeRecoil;
+	Lmao3:
+		TNT1 A 0 A_Print("Pro tip - get a berserk first.",2);
+		Goto DeagleExtremeRecoil;
+	Lmao4:
+		TNT1 A 0 A_Print("lol",1);
+		Goto DeagleExtremeRecoil;
+	Lmao5:
+		TNT1 A 0 A_Print("lmao",1);
+		Goto DeagleExtremeRecoil;
+	Lmao6:
+		TNT1 A 0 A_Print("Fuck,my arm!",1);
+		Goto DeagleExtremeRecoil;
+	Lmao7:
+		TNT1 A 0 A_Print("What were you thinking?",1);
+		Goto DeagleExtremeRecoil;
+	LmaoSuperSecret:
+		TNT1 A 0 A_Print("I spent way too much time on this.",1);
+		Goto DeagleExtremeRecoil;
+	NoAmmo:
+		TNT1 A 0 A_StartSound("weapons/empty", 3);
+		TNT1 A 0 A_JumpIfInventory("Clip1",3,"Reload");
+	NoAmmo2:
+		DEA3 A 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");
+		Goto Ready;
+	 Reload:
+		TNT1 A 0 A_Takeinventory("Reloading",1);
+		TNT1 A 0 A_JumpIfInventory("DualDeagleAmmo",14,"Ready");
+		TNT1 A 0 A_CheckIfAmmo("Clip1",3);
+		DEA7 FGHI 1;
+		DEA5 IJKL 1;
+		TNT1 A 0 A_PlaySound("DEAGOUT");
+		TNT1 A 0 A_FireCustomMissile("DeagleClipSpawn",-18,0,18,-15);
+		DEA5 MNO 1;
+		DEAR HIIIIJJKLMNOPPQQQRS 1;
+		TNT1 A 0 A_PlaySound("DEAGIN");
+		DEAR TUVWX 1;
+		DEAR Y 5;
+		TNT1 A 0 A_PlaySound("DEAGSLID");
+		DEAR Z 1;
+		DEA2 ABBBCD 1;
+		DEA6 UVWX 1;
+		DEA4 ABCD 1;
+		TNT1 A 0 A_PlaySound("DEAGOUT");
+		TNT1 A 0 A_FireCustomMissile("DeagleClipSpawn",-18,0,18,-15);
+		DEA4 EFGHIIIIJJKLMNOPPQQQRS 1;
+		TNT1 A 0 A_PlaySound("DEAGIN");
+		TNT1 A 0 A_Reload2("DualDeagleAmmo",14,"Clip1",2,3,"DeagleAmmo",7,1);
+		DEA4 TUVWX 1;
+		DEA4 Y 5;
+		TNT1 A 0 A_PlaySound("DEAGSLID");
+		DEA4 Z 1;
+		DEA5 A 1;
+		DEA5 B 3;
+		DEA5 CDEFGH 1;
+		DEA7 IHGF 1;
+		Goto Ready;
+	DualWield:
+		TNT1 A 0 A_EndDual;
+		Goto Ready;
+	GrenadeThrowFlash:
+		DEA7 FGHI 1;
+		TNT1 A 24;
+		DEA7 IHGF 1; //32 in total
+		Goto Ready;
+	KickingFlash:
+		DEA7 ABCDEEEEEEEEDCBA 1;
+		Goto Ready;
+	AirKickingFlash:
+		DEA7 ABCDEEEEEEEEEEDCBA 1;
+		Goto Ready;
+	 SlideKickingStart:
+		DEA7 ABCD 1;
+	SlideKickingLoop:
+		DEA7 E 1 {
+			if (CountInv("Kicking") == 0) {
+				return resolvestate("SlideKickingEnd");
+			}
+			return resolvestate(null);
+		}
+		Loop;
+	 SlideKickingEnd:
+		DEA7 EEEEEEDCBA 1;
+		Goto Ready;
+	SprintOverlay:
+		DEA7 ABCD 1;
+	KeepSprinting:
+		DEA7 E 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		"####" A 0 A_KeepSprinting;
+	ReturnFromSprint:
+		DEA7 DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		Goto Ready;
+	}
+	
+	action void A_Reload2(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "null", int secondarymagsize = 0, int secondarychamberbonus = 0, bool multiplicative = false)
+	{
+		Int MagGoal;
+		If(countinv(mag) > 0)
+		{
+			MagGoal = (magsize + chamberbonus);
+		}
+		Else
+		{
+			MagGoal = magsize;
+		}
+		Int SecondaryMagGoal;
+		If(countinv(secondarymag) > 0)
+		{
+			SecondaryMagGoal = (secondarymagsize + secondarychamberbonus);
+		}
+		Else
+		{
+			SecondaryMagGoal = secondarymagsize;
+		}
+		
+		Bool Reloaded;
+		
+		While(!reloaded)
+		{
+			If(countinv(mag) < MagGoal && countinv(ammopool) >= conversion && !multiplicative)
+			{
+				takeinventory(ammopool,conversion);
+				giveinventory(mag,1);
+				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
+				{
+					giveinventory(secondarymag,1);
+				}
+			}
+			Else If(countinv(mag) < MagGoal && multiplicative && countinv(ammopool) >= 1)
+			{
+				takeinventory(ammopool,1);
+				giveinventory(mag,conversion);
+				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
+				{
+					giveinventory(secondarymag,conversion);
+				}
+			}
+			else
+			{
+				reloaded = TRUE;
+			}
+		}
+	}
+}
+
+class DeagleFlySpawn : Actor
+{
+	Default
+	{
+		Radius 0;
+		Height 0;
+		+THRUACTORS
+	}
+	states
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_CustomMissile("DroppedDeagle",17,-4,random (100,120),2,random (30,50));
+		stop;
+	}
+}
+
+class DroppedDeagle : Actor
+{
+	Default
+	{
+		scale 0.9;
+		speed 16;
+		health 1;
+		radius 16;
+		height 4;
+		Gravity 1;
+		damage 0;
+		Bouncetype "Doom";
+		BounceFactor 0.5;
+		WallBounceFactor 0.3;
+		+THRUACTORS
+		+MISSILE
+		+NOTELEPORT
+		+NOBLOCKMAP
+		+BLOODLESSIMPACT
+		+FORCEXYBILLBOARD
+		+NODAMAGETHRUST
+		+MOVEWITHSECTOR
+		+CORPSE
+		-DONTSPLASH
+		Mass 1;
+	}
+	States
+	{
+	Spawn:
+		DEA6 A 3;
+		TNT1 A 0 A_ChangeFlag("THRUACTORS",0);
+		DEA6 BCDEFGH 3;
+		Loop;
+	Death:
+		TNT1 A 0 {
+			Weapon gunPickup = Weapon(Spawn("DesertEagle", pos));
+			if(gunPickup) {
+				gunPickup.AmmoGive1 = 0;
+			}
+		}
+		Stop;
+	}
+}

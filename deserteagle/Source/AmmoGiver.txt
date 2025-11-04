@@ -1,0 +1,11 @@
+#library "AmmoGiver"
+#include "zcommon.acs"
+
+script "DeagleAmmoGiver" ENTER
+{
+	if (CheckInventory("DeagleCounter") < 1) {
+		GiveInventory("DeagleCounter", 1);
+		GiveInventory("DeagleAmmo", 8);
+		GiveInventory("DualDeagleAmmo", 16);
+	}
+}

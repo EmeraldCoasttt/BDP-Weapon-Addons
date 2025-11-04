@@ -1,0 +1,11 @@
+brightmap sprite DEAGB0 { map "brightmaps/DEAGB0.png" disablefullbright }
+brightmap sprite DEAGC0 { map "brightmaps/DEAGC0.png" disablefullbright }
+
+brightmap sprite DEA3B0 { map "brightmaps/DEA3B0.png" disablefullbright }
+brightmap sprite DEA3T0 { map "brightmaps/DEA3T0.png" disablefullbright }
+
+brightmap sprite DEA9B0 { map "brightmaps/DEA9B0.png" disablefullbright }
+brightmap sprite DEA9C0 { map "brightmaps/DEA9C0.png" disablefullbright }
+
+brightmap sprite DEA6N0 { map "brightmaps/DEA6N0.png" disablefullbright }
+brightmap sprite DEA6O0 { map "brightmaps/DEA6O0.png" disablefullbright }
