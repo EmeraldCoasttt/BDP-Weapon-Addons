@@ -1,0 +1,14 @@
+--Sprites--
+Original sprites: Heretic (Raven Software)
+Reloading frames: Lippeth, ravage, Xaser
+Better arrow glows: Sechtera
+Muzzle flash: Sergeant_Mark_IV, TypicalSF, Acclaim Entertainment and Probe Entertainment
+Arrow actor: from mappack Toward The Hell by MyNameIs, edited by Dox778
+
+--Sounds--
+Select: RPG Maker
+Everything else: Squig
+
+--Code--
+Original addon: Dox778, Sergeant_Mark_IV
+Rewrite for Brutal Doom Platinum: nemesisVampy

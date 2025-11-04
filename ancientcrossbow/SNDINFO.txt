@@ -1,0 +1,7 @@
+CrossSelect "Sounds/CrossSelect.ogg"
+CrossFire "Sounds/CrossFire.ogg"
+CrossReload "Sounds/CrossDraw.ogg"
+CrossLit "Sounds/CrossLoad.ogg"
+ARROWHIT "Sounds/CrossImpact.ogg"
+
+$rolloff ARROWHIT 500 2000

@@ -1,0 +1,68 @@
+//todo: fix this
+
+//reloading penetrating
+/*brightmap sprite CRB2A0 { map "Brightmaps/CRB2A0.png" disablefullbright }
+brightmap sprite CRB2B0 { map "Brightmaps/CRB2B0.png" disablefullbright }
+brightmap sprite CRB2C0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB2D0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB2E0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB2F0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB2G0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB2H0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB2I0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+//reloading end penetrating
+brightmap sprite CRB2J0 { map "Brightmaps/CRSBB0.png" disablefullbright }
+brightmap sprite CRB2K0 { map "Brightmaps/CRSBC0.png" disablefullbright }
+//fire frame penetrating
+brightmap sprite CRB2L0 { map "Brightmaps/CRB2L0.png" disablefullbright }
+//kick frame penetrating
+brightmap sprite CRB2S0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+//pickup penetrating
+brightmap sprite CRB2R0 { map "Brightmaps/CRB2R0.png" disablefullbright }
+
+//select penetrating
+brightmap sprite CR1SA0 { map "Brightmaps/CRXSA0.png" disablefullbright }
+brightmap sprite CR1SB0 { map "Brightmaps/CRXSB0.png" disablefullbright }
+brightmap sprite CR1SC0 { map "Brightmaps/CRXSC0.png" disablefullbright }
+brightmap sprite CR1SD0 { map "Brightmaps/CRXSD0.png" disablefullbright }
+brightmap sprite CR1SE0 { map "Brightmaps/CRXSE0.png" disablefullbright }
+//idle penetrating
+brightmap sprite CRB1A0 { map "Brightmaps/CRSBA0.png" disablefullbright }
+brightmap sprite CRB1B0 { map "Brightmaps/CRSBB0.png" disablefullbright }
+brightmap sprite CRB1C0 { map "Brightmaps/CRSBC0.png" disablefullbright }
+brightmap sprite CRB1D0 { map "Brightmaps/CRSBD0.png" disablefullbright }
+
+
+
+
+
+
+//reloading explosive
+brightmap sprite CRB4A0 { map "Brightmaps/CRB2A0.png" disablefullbright }
+brightmap sprite CRB4B0 { map "Brightmaps/CRB2B0.png" disablefullbright }
+brightmap sprite CRB4C0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB4D0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB4E0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB4F0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB4G0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB4H0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+brightmap sprite CRB4I0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+//reloading end explosive
+brightmap sprite CRB4J0 { map "Brightmaps/CRSBB0.png" disablefullbright }
+brightmap sprite CRB4K0 { map "Brightmaps/CRSBC0.png" disablefullbright }
+//fire frame explosive
+brightmap sprite CRB4L0 { map "Brightmaps/CRB2L0.png" disablefullbright }
+//kick frame explosive
+brightmap sprite CRB4S0 { map "Brightmaps/CRB2C0.png" disablefullbright }
+
+//select explosive
+brightmap sprite CR2SA0 { map "Brightmaps/CRXSA0.png" disablefullbright }
+brightmap sprite CR2SB0 { map "Brightmaps/CRXSB0.png" disablefullbright }
+brightmap sprite CR2SC0 { map "Brightmaps/CRXSC0.png" disablefullbright }
+brightmap sprite CR2SD0 { map "Brightmaps/CRXSD0.png" disablefullbright }
+brightmap sprite CR2SE0 { map "Brightmaps/CRXSE0.png" disablefullbright }
+//idle explosive
+brightmap sprite CRB2A0 { map "Brightmaps/CRSXA0.png" disablefullbright }
+brightmap sprite CRB2B0 { map "Brightmaps/CRSXB0.png" disablefullbright }
+brightmap sprite CRB2C0 { map "Brightmaps/CRSXC0.png" disablefullbright }
+brightmap sprite CRB2D0 { map "Brightmaps/CRSXD0.png" disablefullbright }*/

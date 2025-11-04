@@ -1,0 +1,33 @@
+ACTOR CrossbowExplosionFlames: FlameTrails
+{
+	Scale 0.5
+	Speed 1
+	States
+	{
+	Spawn:
+		FIR3 CDEFGHIJKLMNOP 1 Bright
+		Stop
+	}
+}
+
+ACTOR BDExplosionCrossbowparticlesSmall: BDExplosionparticlesSmall
+{
+	Scale 0.4
+	States
+	{
+	Live:
+		SPKS ABCDEFGHI 1 Bright
+		Stop
+	}
+}
+
+Actor CrossbowFlare : RocketFlare
+{
+	Scale 0.2
+}
+
+ACTOR CrossbowFlameTrails: FlameTrails
+{
+	Scale 0.2
+	Speed 2
+}
