@@ -2,8 +2,6 @@ class DualDeagleAmmo : Ammo {Default{Inventory.MaxAmount 16; Inventory.Icon "DEA
 
 class DualDeagle : BrutalWeapon
 {
-	bool sideFired;
-	
 	Default
 	{
 		Weapon.AmmoUse1 0;
@@ -31,31 +29,19 @@ class DualDeagle : BrutalWeapon
 		DEA3 A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
-		TNT1 A 0 {
-			let nextWeap = player.PendingWeapon;
-			if (nextWeap.GetClassName() == "DesertEagle") {
-				return resolvestate("DeselectToSingle");
-			}
-			return resolvestate(null);
-		}
 		DEA7 FGHI 1;
-		TNT1 A 0 A_Lower(128);
-		Wait;
-	DeselectToSingle:
-		TNT1 A 0 A_Lower(128);
+		TNT1 A 0 A_Lower;
 		Wait;
 	Select:
 		TNT1 A 0 {A_SetCrosshairDX("SMGRet",1000,0.3);}
 		Goto SelectFirstPersonLegs;
 	SelectContinue:
-		TNT1 A 0 A_jumpifinventory("SwitchingDualModes",1,"SelectFromSingle");
-		TNT1 A 1;
+		TNT1 A 1 A_GunSlingerReload("DualDeagleAmmo",16,"Clip1",3,"DeagleAmmo");
 	ReturnFromNothing:
 		TNT1 A 0 A_PlaySound("DEAGHOLD");
 		DEA7 IHGF 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
-	SelectFromSingle:
-		TNT1 A 0 A_Takeinventory("SwitchingDualModes",1);
+	SelectFromDual:
 		TNT1 A 0 A_PlaySound("DEAGHOLD");
 		DEA3 MNOPQRS 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
@@ -80,11 +66,17 @@ class DualDeagle : BrutalWeapon
 			A_SetPitch(pitch-5,SPF_INTERPOLATE);
 			A_SetAngle(angle+2.5,SPF_INTERPOLATE);
 		}
+		TNT1 A 0 A_SemiFlag;
 		DEA6 J 1 A_SetAngle(angle-0.5,SPF_INTERPOLATE);
 		DEA6 K 1 A_SetPitch(pitch+2,SPF_INTERPOLATE);
 		DEA6 L 1 {A_SetAngle(angle-1,SPF_INTERPOLATE); A_SetPitch(pitch+1,SPF_INTERPOLATE);}
 		DEA6 M 1 {A_SetAngle(angle-1,SPF_INTERPOLATE); A_SetPitch(pitch+0.5,SPF_INTERPOLATE);}
 		DEA3 A 1 A_WeaponReady(WRF_NOBOB|WRF_ALLOWRELOAD);
+		TNT1 A 0 A_SemiRefire("Fire","SemiAutoLul");
+		Goto Ready;
+	SemiAutoLul:
+		DEA3 A 1;
+		TNT1 A 0 A_SemiRefire("Fire","SemiAutoLul");
 		Goto Ready;
 	 Fire2:
 		DEA6 N 1 Bright {
@@ -104,11 +96,13 @@ class DualDeagle : BrutalWeapon
 			A_SetPitch(pitch-5,SPF_INTERPOLATE);
 			A_SetAngle(angle-2.5,SPF_INTERPOLATE);
 		}
+		TNT1 A 0 A_SemiFlag;
 		DEA6 Q 1 A_SetAngle(angle+0.5,SPF_INTERPOLATE);
 		DEA6 R 1 A_SetPitch(pitch+2,SPF_INTERPOLATE);
 		DEA6 S 1 {A_SetAngle(angle+1,SPF_INTERPOLATE); A_SetPitch(pitch+1,SPF_INTERPOLATE);}
 		DEA6 T 1 {A_SetAngle(angle+1,SPF_INTERPOLATE); A_SetPitch(pitch+0.5,SPF_INTERPOLATE);}
 		DEA3 A 1 A_WeaponReady(WRF_NOBOB|WRF_ALLOWRELOAD);
+		TNT1 A 0 A_SemiRefire("Fire","SemiAutoLul");
 		Goto Ready;
 	FireNoBerserk:
 		TNT1 A 0 A_CheckIfAmmo("DualDeagleAmmo",9);
@@ -173,9 +167,9 @@ class DualDeagle : BrutalWeapon
 		Goto DeagleExtremeRecoil;
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
-		TNT1 A 0 A_JumpIfInventory("Clip1",3,"Reload");
 	NoAmmo2:
-		DEA3 A 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(CountInv("Clip1") > 2 && CountInv("DualDeagleAmmo") < 14,"Reload");
+		DEA3 A 1 A_WeaponReadyDX(WRF_NOFIRE,false,false);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");
 		Goto Ready;
 	 Reload:
@@ -200,7 +194,7 @@ class DualDeagle : BrutalWeapon
 		TNT1 A 0 A_FireCustomMissile("DeagleClipSpawn",-18,0,18,-15);
 		DEA4 EFGHIIIIJJKLMNOPPQQQRS 1;
 		TNT1 A 0 A_PlaySound("DEAGIN");
-		TNT1 A 0 A_Reload2("DualDeagleAmmo",14,"Clip1",2,3,"DeagleAmmo",7,1);
+		TNT1 A 0 A_Reload("DualDeagleAmmo",14,"Clip1",2,3,"DeagleAmmo",7,1);
 		DEA4 TUVWX 1;
 		DEA4 Y 5;
 		TNT1 A 0 A_PlaySound("DEAGSLID");
@@ -245,56 +239,6 @@ class DualDeagle : BrutalWeapon
 	ReturnFromSprint:
 		DEA7 DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 		Goto Ready;
-	}
-	
-	action void A_Reload2(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "null", int secondarymagsize = 0, int secondarychamberbonus = 0, bool multiplicative = false)
-	{
-		Int MagGoal;
-		If(countinv(mag) > 0)
-		{
-			MagGoal = (magsize + chamberbonus);
-		}
-		Else
-		{
-			MagGoal = magsize;
-		}
-		Int SecondaryMagGoal;
-		If(countinv(secondarymag) > 0)
-		{
-			SecondaryMagGoal = (secondarymagsize + secondarychamberbonus);
-		}
-		Else
-		{
-			SecondaryMagGoal = secondarymagsize;
-		}
-		
-		Bool Reloaded;
-		
-		While(!reloaded)
-		{
-			If(countinv(mag) < MagGoal && countinv(ammopool) >= conversion && !multiplicative)
-			{
-				takeinventory(ammopool,conversion);
-				giveinventory(mag,1);
-				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
-				{
-					giveinventory(secondarymag,1);
-				}
-			}
-			Else If(countinv(mag) < MagGoal && multiplicative && countinv(ammopool) >= 1)
-			{
-				takeinventory(ammopool,1);
-				giveinventory(mag,conversion);
-				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
-				{
-					giveinventory(secondarymag,conversion);
-				}
-			}
-			else
-			{
-				reloaded = TRUE;
-			}
-		}
 	}
 }
 
